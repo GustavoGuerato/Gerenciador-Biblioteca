@@ -42,6 +42,12 @@ class Pessoa:
         endereco_completo = f' o seu endereço é{rua}, {bairro}, {cidade}'
         return endereco_completo
 
+    def atualizar_endereco(self):
+        nova_rua = input('Digite o novo nome de sua rua: ')
+        novo_bairro = input('Digite o novo bairro: ')
+        nova_cidade = input('Digite a nova cidade: ')
+        self.endereco = f'O novo endereço é {nova_rua}, {novo_bairro}, {nova_cidade}'
+
 
 class Biblioteca:
     livros = []
@@ -54,6 +60,16 @@ class Biblioteca:
     def adiciona_livro(self, livro):
         self.livros.append(livro)
 
+    def verifica_disponibilidade(self, livro_titulo):
+        for livro in self.livros:
+            if livro_titulo == livro_titulo:
+                if livro.esta_disponivel():
+                    print(f'{livro.titulo} está disponivel')
+                else:
+                    print(f'{livro.titulo} não está disponivel')
+                return
+        print(f'O livro "{livro_titulo}" não está na biblioteca.')
+
     def listar_livros(self):
         if not self.livros:
             print('A nossa biblioteca não tem nenhum livro no momento.')
@@ -61,6 +77,13 @@ class Biblioteca:
         for livro in self.livros:
             if livro.esta_disponivel():
                 print(f'{livro.titulo}está disponivel')
+
+    def remove_livros(self, livro):
+        if livro in self.livros:
+            print(f'O livro "{livro.titulo}" foi removido da biblioteca.')
+        else:
+            print(f'O livro "{livro.titulo}" não está na biblioteca.')
+
 
 class Livro:
 
@@ -71,4 +94,22 @@ class Livro:
         self.emprestado = False
 
     def realizar_emprestimo(self):
-        pass
+        if not self.emprestado:
+            self.emprestado = True
+            print(f'O livro {self.titulo} foi emprestado com sucesso.')
+        else:
+            print(f'O livro {self.titulo} já foi emprestado para outra pessoa')
+
+    def devolver_livro(self):
+        if self.emprestado:
+            self.emprestado = False
+            print(f'O livro {self.titulo}Foi devolvido com sucesso.')
+        else:
+            print(f'{self.titulo}ainda não foi emprestado.')
+
+    def renovar_emprestimo(self, nova_data_devolucao):
+        if self.emprestado:
+            self.data_devolucao = nova_data_devolucao
+            print(f'O empréstimo do livro "{self.titulo}" foi renovado até {nova_data_devolucao}.')
+        else:
+            print(f'O livro "{self.titulo}" não está atualmente emprestado.')
